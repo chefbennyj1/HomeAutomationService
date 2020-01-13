@@ -287,9 +287,9 @@
     <Compile Include="ValuesController.cs" />
     <Compile Include="Api\Vera\HomeAutomationEventArgs.cs" />
     <Compile Include="Api\Vera\VeraApi.cs" />
-    <Compile Include="Api\Vera\InfraredCommands.cs" />
-    <Compile Include="Api\Vera\InfraredController.cs" />
-    <Compile Include="Api\Vera\InfraredEvents.cs" />
+    <Compile Include="Api\Infrared\InfraredCommands.cs" />
+    <Compile Include="Api\Infrared\InfraredController.cs" />
+    <Compile Include="Api\Infrared\InfraredEvents.cs" />
     <Compile Include="Api\Vera\VeraController.cs" />
     <Compile Include="Api\MagicMirror\MagicMirrorCommands.cs" />
     <Compile Include="Model.cs" />
