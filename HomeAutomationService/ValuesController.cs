@@ -1,5 +1,5 @@
 ﻿using HomeAutomationService.Alexa;
-
+using HomeAutomationService.Helpers;
 using HomeAutomationService.Api.GeoLocation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using HomeAutomationService.Api.FireTV;
+using HomeAutomationService.Api.Vera;
 
 namespace HomeAutomationService
 {
@@ -40,14 +41,24 @@ namespace HomeAutomationService
                 case 2:
                     FireTVController.adbCommand("shell monkey -p  tv.emby.embyatv -c android.intent.category.LAUNCHER 1");//("shell input keyevent 3");
                     return HttpStatusCode.OK;
-
+                case 3:
+                    return ControllerData();
                 default:
 
                     return result;
             }
         }
-
         
+        public string ControllerData()
+        {
+            try
+            {
+                return Helpers.HttpClient.GET("http://192.168.2.15:3480/data_request?id=sdata&output_format=json");
+            }
+            catch { }
+
+            return string.Empty;
+        }
 
         [Route("Alexa/values")]
         public async Task<IHttpActionResult> Post([FromBody] object value)

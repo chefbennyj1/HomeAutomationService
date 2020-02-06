@@ -308,6 +308,21 @@
     <Content Include="Api\Alexa\Configuration\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Dashboard\Vera\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dashboard\Vera\scripts\glider.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dashboard\Vera\styles\glider.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dashboard\Vera\styles\main.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dashboard\Vera\scripts\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="uutx.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

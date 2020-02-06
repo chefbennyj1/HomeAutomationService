@@ -1,10 +1,5 @@
 ﻿using HomeAutomationService.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HomeAutomationService.Api.FireTV
 {
@@ -67,6 +62,10 @@ namespace HomeAutomationService.Api.FireTV
         }
     }
 
+    public static void GetAndroidNetworkDevices()
+    {
+        adbCommand("devices");
+    }
         public static void LoadFireTVController()
         {
             KillADB();

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HomeAutomationService.Helpers;
 using System.Diagnostics;
+using HomeAutomationService.Api.Vera;
 
 namespace HomeAutomationService.Vera
 {

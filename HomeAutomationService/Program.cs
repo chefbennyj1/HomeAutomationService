@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using HomeAutomationService.Emby;
 using HomeAutomationService.Vera;
 
 using Microsoft.Owin.Hosting;
@@ -10,6 +9,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Collections.Generic;
 using HomeAutomationService.Api.FireTV;
+using HomeAutomationService.Api.Vera;
 
 namespace HomeAutomationService
 {
@@ -37,6 +37,8 @@ namespace HomeAutomationService
 
             FireTVController.LoadFireTVController();
             
+            
+
             //Vera Home Automation Service
             VeraApi.BuildVeraClient(CreateStateMonitor: true);
 

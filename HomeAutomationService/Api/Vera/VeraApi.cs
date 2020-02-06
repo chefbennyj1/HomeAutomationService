@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using HomeAutomationService.Helpers;
-using HomeAutomationService.MachineLearning;
+using HomeAutomationService.Vera;
 
-namespace HomeAutomationService.Vera
+namespace HomeAutomationService.Api.Vera
 {
     // ReSharper disable InconsistentNaming
     // ReSharper disable ClassNeverInstantiated.Global

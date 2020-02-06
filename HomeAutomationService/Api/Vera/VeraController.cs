@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HomeAutomationService.Vera
+namespace HomeAutomationService.Api.Vera
 {
     
     public class Section

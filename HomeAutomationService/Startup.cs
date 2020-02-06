@@ -39,7 +39,7 @@ namespace HomeAutomationService
             return new FileServerOptions
             {
                 EnableDefaultFiles = true,
-                FileSystem = new PhysicalFileSystem("./Alexa/Configuration"),
+                FileSystem = new PhysicalFileSystem("./Dashboard/Vera"),
                 StaticFileOptions = { ContentTypeProvider = new CustomContentTypeProvider() },
                 EnableDirectoryBrowsing = true
             };
@@ -59,6 +59,8 @@ namespace HomeAutomationService
                 config.Routes.MapHttpRoute("FireTVService", "FireTV/{controller}/{id}",
                     new { id = RouteParameter.Optional });
                 config.Routes.MapHttpRoute("HomeAutomationService", "GasPricesLocations/{controller}/{id}",
+                    new { id = RouteParameter.Optional });
+                config.Routes.MapHttpRoute("VeraHomeAutomationService", "Vera/{controller}/{id}",
                     new { id = RouteParameter.Optional });
 
                 config.MessageHandlers.Add(new CustomHeaderHandler());
