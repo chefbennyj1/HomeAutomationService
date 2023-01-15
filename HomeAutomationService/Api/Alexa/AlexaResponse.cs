@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using HomeAutomationService.Alexa;
 
-namespace HomeAutomationService.Alexa 
+namespace HomeAutomationService.Api.Alexa 
 {
     // ReSharper disable UnusedAutoPropertyAccessor.Global
     // ReSharper disable UnusedMember.Global
@@ -64,13 +66,23 @@ namespace HomeAutomationService.Alexa
         public OutputSpeech2 outputSpeech { get; set; }
     }
 
+    public class Directive
+    {
+        public string type { get; set; }
+        public string speech { get; set; }
+
+        public string token { get; set; }
+        public List<object> commands { get; set; }
+    }
+
     [Serializable]
     public class Response
     {
         public OutputSpeech outputSpeech { get; set; }
         public Card card { get; set; }
         public Reprompt reprompt { get; set; }
-        public bool shouldEndSession { get; set; }
+        public object shouldEndSession { get; set; }
+        public List<Directive> directives { get; set; }
     }
 
     [Serializable]

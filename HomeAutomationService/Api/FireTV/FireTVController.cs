@@ -3,9 +3,9 @@ using System.Diagnostics;
 
 namespace HomeAutomationService.Api.FireTV
 {
-    public class FireTVController
+    public class FireTvController
     {
-        public static void adbCommand(string adbCommand)
+        public static void AdbCommand(string adbCommand)
         {
         var p = new Process();
         p.StartInfo = new ProcessStartInfo("adb", adbCommand)
@@ -44,7 +44,7 @@ namespace HomeAutomationService.Api.FireTV
 
     }
 
-    public static void KillADB()
+    public static void KillAdb()
     {
         Process[] processlist = Process.GetProcesses();
 
@@ -64,18 +64,18 @@ namespace HomeAutomationService.Api.FireTV
 
     public static void GetAndroidNetworkDevices()
     {
-        adbCommand("devices");
+        AdbCommand("devices");
     }
-        public static void LoadFireTVController()
+        public static void LoadFireTvController(string fireTvIp)
         {
-            KillADB();
-            
-            adbCommand("disconnect");
-            adbCommand("kill-server");
-            adbCommand("-P 5038 start-server");
-            adbCommand("connect 192.168.2.156");
+            KillAdb();
+
+            AdbCommand("disconnect");
+            AdbCommand("kill-server");
+            AdbCommand("-P 5038 start-server");
+            AdbCommand($"connect {fireTvIp}");
 
         }
-    
+
     }
 }

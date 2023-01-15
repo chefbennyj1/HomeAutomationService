@@ -24,7 +24,7 @@ namespace HomeAutomationService
             appBuilder.UseCors(CorsOptions.AllowAll);
                                   
             
-            appBuilder.UseFileServer(GetFileServerOptions());
+            //appBuilder.UseFileServer(GetFileServerOptions());
             appBuilder.UseWebApi(GetWebApiHttpConfigurationOptions());
             
 
@@ -39,7 +39,7 @@ namespace HomeAutomationService
             return new FileServerOptions
             {
                 EnableDefaultFiles = true,
-                FileSystem = new PhysicalFileSystem("./Dashboard/Vera"),
+                FileSystem = new PhysicalFileSystem(""),
                 StaticFileOptions = { ContentTypeProvider = new CustomContentTypeProvider() },
                 EnableDirectoryBrowsing = true
             };
@@ -53,14 +53,13 @@ namespace HomeAutomationService
                 config.SuppressDefaultHostAuthentication();
                 config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
                 // Web API routes
-                config.MapHttpAttributeRoutes(); 
+                config.MapHttpAttributeRoutes();
 
 
-                config.Routes.MapHttpRoute("FireTVService", "FireTV/{controller}/{id}",
-                    new { id = RouteParameter.Optional });
-                config.Routes.MapHttpRoute("HomeAutomationService", "GasPricesLocations/{controller}/{id}",
-                    new { id = RouteParameter.Optional });
-                config.Routes.MapHttpRoute("VeraHomeAutomationService", "Vera/{controller}/{id}",
+                //config.Routes.MapHttpRoute("FireTVService", "Alexa/values",
+                //    new { id = RouteParameter.Optional });
+
+                config.Routes.MapHttpRoute("Test", "api/{controller}/{id}",
                     new { id = RouteParameter.Optional });
 
                 config.MessageHandlers.Add(new CustomHeaderHandler());

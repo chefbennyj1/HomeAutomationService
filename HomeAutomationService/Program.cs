@@ -1,15 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
-using HomeAutomationService.Vera;
-
 using Microsoft.Owin.Hosting;
 using HomeAutomationService.Helpers;
 using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using HomeAutomationService.Api.FireTV;
-using HomeAutomationService.Api.Vera;
+
 
 namespace HomeAutomationService
 {
@@ -17,7 +17,7 @@ namespace HomeAutomationService
     public class Program
     {      
        
-        public static BackgroundWorker ControlFireplace { get; private set; }
+        
 
         public static Timer T { get; set; }
         
@@ -30,47 +30,64 @@ namespace HomeAutomationService
             T = new Timer(RestartApplication);
             T.Change(500, 500);
 
-            
+            string fireTvIp = string.Empty;
+            string serviceIp = string.Empty;
 
             AppDomain.CurrentDomain.DomainUnload += new EventHandler(ExitApplication);
 
+            string hostName = Dns.GetHostName();
+            IPAddress[] ipAddresses = Dns.GetHostAddresses(hostName);
+            foreach (IPAddress ip in ipAddresses)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    serviceIp = (ip.ToString());
+                }
+            }
 
-            FireTVController.LoadFireTVController();
+            ConsoleHelper.Write($"Starting Service: {serviceIp}:9925", ConsoleHelper.AppMessage.Status);
             
-            
+            Console.WriteLine("\n Please turn on your fire Tv now...");
 
-            //Vera Home Automation Service
-            VeraApi.BuildVeraClient(CreateStateMonitor: true);
+            if (!File.Exists("fireTv.txt"))
+            {
+                Console.WriteLine("\n\nPlease enter the Ip address of the FireTV you want to control:");
+                fireTvIp = Console.ReadLine();
+                SaveFireTV(fireTvIp);
+            }
+            else
+            {
+                fireTvIp = File.ReadAllText("fireTv.txt");
+            }
 
-            // Fireplace Controller
-            ControlFireplace = new BackgroundWorker();
-            ControlFireplace.DoWork += InfraredEvents.FireplaceOn;
+            ConsoleHelper.Write("Loading...", ConsoleHelper.AppMessage.FireTV);
+
+            FireTvController.LoadFireTvController(fireTvIp);
 
             //Alexa Endpoint Service
-            const string baseAddress = "http://192.168.2.104:9925/";
+            string baseAddress = $"http://{serviceIp}:9925/";
             using (WebApp.Start<Startup>(baseAddress))
             {
+                
+                ConsoleHelper.StartupLog.Add("Amazon Alexa Fire TV Endpoint Connected", ConsoleHelper.AppMessage.Alexa);
+                
+                ConsoleHelper.Write("FireTv Ready...", ConsoleHelper.AppMessage.FireTV);
 
-                //Initiate Machine Learning - Experimental
-                //var io = new RoutineAI();
-               //Editor.EditDataset(RoutineAI.LoadTrainningData());
+                Console.WriteLine("\n Skill endpoint should point to: Alexa/values");
 
+                
 
-                ConsoleHelper.StartupLog.Add("Amazon Alexa Endpoint Connected", ConsoleHelper.AppMessage.Alexa);
-
-
-                //Have to add all these messages for boot up to a dictionary because they are all run spiratically and they mess up the console and interfesr with each other.
+                //Have to add all these messages for boot up to a dictionary because they are all run spiratically and they mess up the console and interfere with each other.
                 foreach (KeyValuePair<string, ConsoleHelper.AppMessage> entry in ConsoleHelper.StartupLog)
                 {
                     ConsoleHelper.Write(entry.Key, entry.Value);
                 }
 
+                Console.CursorTop = 5;
+                ConsoleHelper.Write("Ready.", ConsoleHelper.AppMessage.Status);
+                Console.CursorTop = 21;
                 Console.ReadLine();
             }
-
-            
-
-
 
         }
 
@@ -79,6 +96,10 @@ namespace HomeAutomationService
             ConsoleHelper.Write("Goodbye", ConsoleHelper.AppMessage.Status);
         }
 
+        public static void SaveFireTV(string ip)
+        {
+            File.WriteAllText("fireTv.txt", ip);
+        }
         public static void RestartApplication(object sender = null)
         {           
             var now = DateTime.Now;
@@ -86,7 +107,7 @@ namespace HomeAutomationService
             if (now.Hour == 23 && now.Minute == 45 && now.Second <= 10)
             {
                 T.Change(Timeout.Infinite, Timeout.Infinite);
-                FireTVController.KillADB();
+                FireTvController.KillAdb();
                 // Get file path of current process 
                 var filePath = Assembly.GetExecutingAssembly().Location;
 
@@ -100,7 +121,7 @@ namespace HomeAutomationService
             if (now.Hour == 16 && now.Minute == 45 && now.Second <= 10)
             {
                 T.Change(Timeout.Infinite, Timeout.Infinite);
-                FireTVController.KillADB();
+                FireTvController.KillAdb();
                 // Get file path of current process 
                 var filePath = Assembly.GetExecutingAssembly().Location;
 

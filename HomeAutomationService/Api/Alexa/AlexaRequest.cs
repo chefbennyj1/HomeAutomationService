@@ -124,6 +124,18 @@ namespace HomeAutomationService.Alexa
     {
         public System System { get; set; }
         public Geolocation Geolocation { get; set; }
+        public List<Viewport> Viewports { get; set; }
+        public Viewport Viewport { get; set; }
+    }
+    public class Viewport
+    {
+        public string type { get; set; }
+        public string id { get; set; }
+        public string shape { get; set; }
+        public string mode { get; set; }
+        public int pixelWidth { get; set; }
+        public int pixelHeight { get; set; }
+        public int dpi { get; set; }
     }
 
     public class Intent

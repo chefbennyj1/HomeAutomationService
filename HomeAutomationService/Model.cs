@@ -8,7 +8,6 @@ namespace HomeAutomationService
         public static readonly Dictionary<string, bool> DeviceStates = new Dictionary<string, bool>
         {
                 {"Fireplace", false},
-                {"XBOX_CONSOLE", false },
                 {"Computer Display", true }
         }; 
     }
